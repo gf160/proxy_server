@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>메인</title>
+
+    <link rel="stylesheet" type="text/css" href="/lib/jqwidgets/styles/jqx.base.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/jqwidgets/styles/jqx.ui-darkness.css"/>
+
+    <script src="/lib/jquery/jquery-1.12.4.min.js"></script>
+
+    <script src="/lib/jqwidgets/jqx-all.js"></script>
+    <script src='/lib/jqwidgets/localization.js'></script>
+    <script src='/lib/jqwidgets/globalization/globalize.js'></script>
+    <script src='/lib/jqwidgets/globalization/globalize.culture.ko-KR.js'></script>
+
+    <script src="/js/hm/hm.grid.js"></script>
+    <script src="/js/hm/hm.util.js"></script>
+</head>
+<body>
+    <div id="proxyGrid"></div>
+
+    <script type="text/javascript">
+        var $proxyGrid;
+
+        var Main = {
+            initVariable: function(){
+                $proxyGrid = $('#proxyGrid');
+            },//initVariable()
+            initDesign: function(){
+                HmGrid.create($proxyGrid, {
+                    source: new $.jqx.dataAdapter({
+                        datatype: 'json',
+                        url: null,
+                        datafields: [
+                            {name: 'port', type: 'int'},
+                            {name: 'dstIp', type: 'string'},
+                            {name: 'dstPort', type: 'int'},
+                        ]
+                    },{
+                        formatData: function(data) {
+                            return data;
+                        }
+                    }),
+                    showaggregates: true,
+                    showstatusbar: true,
+                    statusbarheight: 25,
+                    columns: [
+                        { text : 'PORT', datafield : 'port', width: 200, cellsalign: 'center'},
+                        { text : 'DST_IP', datafield : 'dstIp', width: 200, cellsalign: 'center'},
+                        { text : 'DST_PORT', datafield : 'dstPort', width: 200, cellsalign: 'center'}
+                    ]
+                })
+            },//initDesign
+            initData: function(){
+//                Server.get('/proxy/getProxyList',{
+//                    data: {a:'a'},
+//                    success: function(result){
+//                        console.log('result', result);
+//                    }
+//                });//Server.get//테스트용
+                HmGrid.updateBoundData($proxyGrid, 'proxy/getProxyList');
+            },//initData
+        }//Main
+        $(function(){
+            Main.initVariable();
+            Main.initDesign();
+            Main.initData();
+        });
+    </script>
+</body>
+</html>
+

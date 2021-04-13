@@ -1,0 +1,17 @@
+<proxy_list>
+    <proxy>
+        <port>9000</port>
+        <dst-ip>10.1.2.27</dst-ip>
+        <dst-port>9001</dst-port>
+    </proxy>
+    <proxy>
+        <port>9001</port>
+        <dst-ip>10.1.1.232</dst-ip>
+        <dst-port>3389</dst-port>
+    </proxy>
+    <proxy>
+        <port>9900</port>
+        <dst-ip>211.238.147.200</dst-ip>
+        <dst-port>10022</dst-port>
+    </proxy>
+</proxy_list>
