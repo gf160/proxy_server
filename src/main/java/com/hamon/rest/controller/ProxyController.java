@@ -3,6 +3,9 @@ package com.hamon.rest.controller;
 import com.hamon.common.ReturnData;
 import com.hamon.h2db.domain.TbProxyInfo;
 import com.hamon.h2db.repository.TbProxyInfoRepository;
+import com.hamon.main.CarExample;
+import com.hamon.main.ThreadHandler;
+import org.hibernate.loader.custom.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,7 @@ import java.util.Map;
  * Created by Leeyouje on 2020-12-21.
  */
 @RestController
-@RequestMapping("/proxy")
+@RequestMapping("/")
 public class ProxyController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -26,22 +29,56 @@ public class ProxyController {
     @Autowired
     private TbProxyInfoRepository tbProxyInfoRepository;
 
-    @RequestMapping(value ="/getProxyList", method = RequestMethod.GET)
-    @ResponseBody
-    public ReturnData getProxyList(){
-        List<TbProxyInfo> proxyList = tbProxyInfoRepository.findAll();
+    @Autowired
+    private ThreadHandler handler;
 
-//        for(TbProxyInfo _item : proxyList){
-//            _item.get
-//        }//for each
+    //프록시 리스트 조회
+    @GetMapping(value ="/proxy")
+    @ResponseBody
+    public ReturnData getProxyListAll(){
+        List<TbProxyInfo> proxyList = tbProxyInfoRepository.findAll();
 
         return new ReturnData(proxyList);
     }
 
-    @RequestMapping(value ="/addProxyData")
+    //프록시 추가
+    @PostMapping(value ="/proxy")
     @ResponseBody
-    public ReturnData addProxyData(@RequestParam Map<String, Object> reqMap){
+    public ReturnData addProxyData(@RequestBody Map<String, Object> reqMap){
         return new ReturnData();
     }
 
+    //프록시 추가
+    @PostMapping(value ="/proxy/{proxyIp}")
+    @ResponseBody
+    public ReturnData addProxyData(@PathVariable String proxyIp){
+        return new ReturnData();
+    }
+
+
+    @GetMapping(value ="/proxy/start")
+    @ResponseBody
+    public ReturnData proxyStart(){
+        try{
+            handler.getProxyList();
+
+            handler.startThread();
+        } catch (Exception e){
+            logger.error("Thread start is fail");
+            e.printStackTrace();
+        }
+        return new ReturnData(handler.printProxyInfo());
+    }
+
+    @GetMapping(value ="/proxy/stop")
+    @ResponseBody
+    public ReturnData proxyStop(){
+        try{
+            handler.stopThread();
+        } catch (Exception e){
+            logger.error("Thread stop is fail");
+            e.printStackTrace();
+        }
+        return new ReturnData("SUCCESS");
+    }
 }

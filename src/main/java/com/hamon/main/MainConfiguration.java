@@ -14,4 +14,10 @@ public class MainConfiguration {
         car.setWheel(4);
         return car;
     }
+
+    @Bean
+    ThreadHandler ThreadHandler(){
+        ThreadHandler _th = new ThreadHandler();
+        return _th;
+    }
 }

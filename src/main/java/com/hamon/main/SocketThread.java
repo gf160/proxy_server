@@ -1,6 +1,7 @@
 package com.hamon.main;
 
 import com.hamon.common.ProxyInfoDto;
+import com.hamon.h2db.domain.TbProxyInfo;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import jdk.internal.util.xml.impl.Input;
 import org.slf4j.Logger;
@@ -20,11 +21,11 @@ public class SocketThread extends Thread {
 
     //private static final int BUFFER_SIZE = 8192;
     private String clientIp = "";
-    private ProxyInfoDto proxyInfo = null;
+    private TbProxyInfo proxyInfo = null;
     private Socket socket = null;
     private Socket remoteSocket = null;
 
-    public SocketThread(Socket _socket, ProxyInfoDto _dto, String _clientIp) throws IOException{
+    public SocketThread(Socket _socket, TbProxyInfo _dto, String _clientIp) throws IOException{
         logger.debug("SocketThread Constructor(" + _dto.getPort() + ")");
         this.proxyInfo = _dto;
         this.socket = _socket;

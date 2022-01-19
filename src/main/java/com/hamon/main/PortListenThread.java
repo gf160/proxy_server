@@ -1,6 +1,7 @@
 package com.hamon.main;
 
 import com.hamon.common.ProxyInfoDto;
+import com.hamon.h2db.domain.TbProxyInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,16 +16,18 @@ import java.net.Socket;
 public class PortListenThread extends Thread {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private ProxyInfoDto proxyInfo;
+    //private ProxyInfoDto proxyInfo;
+    private TbProxyInfo proxyInfo;
+    private ServerSocket ss = null;
 
-    public PortListenThread(ProxyInfoDto _dto){
+    public PortListenThread(TbProxyInfo _dto){
         logger.debug("PortListener constructor");
         this.proxyInfo = _dto;
     }
 
     public void run() {
         try{
-            ServerSocket ss = new ServerSocket(proxyInfo.getPort());
+            ss = new ServerSocket(proxyInfo.getPort());
             logger.info(proxyInfo.getPort() + " Is Ready");
 
             while(true){
@@ -35,9 +38,17 @@ public class PortListenThread extends Thread {
                 SocketThread clientThread = new SocketThread(newClient, proxyInfo, clientIp);
                 clientThread.start();
             }//while(true)
-
         } catch (IOException ioe){
             ioe.printStackTrace();
         }
     }
+
+    public void closeThread(){
+        try{
+            ss.close();
+        }catch (IOException ioe){
+            logger.warn("thread is closed");
+        }
+    }
+
 }
