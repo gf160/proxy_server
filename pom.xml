@@ -12,7 +12,7 @@
 	<artifactId>proxy_server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>proxy_server</name>
-	<description>하몬 프록시 서버</description>
+	<description>프록시 서버</description>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -29,6 +29,7 @@
 			<artifactId>spring-boot-starter-logging</artifactId>
 			<version>2.0.4.RELEASE</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

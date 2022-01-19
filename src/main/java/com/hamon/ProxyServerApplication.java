@@ -13,7 +13,7 @@ import java.util.List;
 
 @SpringBootApplication
 //public class ProxyServerApplication implements CommandLineRunner{
-public class ProxyServerApplication{
+public class ProxyServerApplication {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
