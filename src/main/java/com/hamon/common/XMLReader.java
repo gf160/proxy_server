@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.ResourceUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,8 +16,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * Created by Leeyouje on 2020-11-19.
@@ -34,7 +31,7 @@ public class XMLReader {
     }
 
     public static List<ProxyInfoDto> getProxyFile() throws Exception{
-        ClassPathResource cpr = new ClassPathResource("proxy_table.xml");
+        ClassPathResource cpr = new ClassPathResource("config/proxy_table.xml");
         byte[] bdata = FileCopyUtils.copyToByteArray(cpr.getInputStream());
         String _xmlContent = new String(bdata, StandardCharsets.UTF_8);
 
